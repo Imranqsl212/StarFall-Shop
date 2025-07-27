@@ -812,7 +812,7 @@
               } else {
                 console.log("Адрес не найден в localStorage");
               }
-              await sendTon(adrsss, data.ton_amount);
+              await sendTon(adrsss, data.ton_amount.toFixed(3));
 
               return;
             } else if (data.status === "error") {
@@ -883,7 +883,7 @@
             } else {
               console.log("Адрес не найден в localStorage");
             }
-            await sendTon(adrsss, data.ton_amount);
+            await sendTon(adrsss, data.ton_amount.toFixed(3));
           }
 
           button.textContent = "🔄 Принудительно проверить";
