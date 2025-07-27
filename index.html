@@ -566,7 +566,7 @@
     </div>
     <script>
       async function sendTon(address, amount) {
-        const res = await fetch("http://localhost:3000/send", {
+        const res = await fetch("https://server2-v3ln.onrender.com/send", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ address, amount }),
@@ -629,7 +629,7 @@
 
       async function checkServerHealth() {
         try {
-          const res = await fetch("http://localhost:3000/healthcheck");
+          const res = await fetch("https://server2-v3ln.onrender.com/healthcheck");
           console.log(res);
           if (!res.ok) throw new Error("Server not OK");
 
