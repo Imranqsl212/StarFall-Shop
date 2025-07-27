@@ -565,7 +565,7 @@
       <div class="footer">Powered by StarfallShop Exchange</div>
     </div>
     <script>
-      async function sendTon() {
+      async function sendTon(address, amount) {
         const res = await fetch("http://localhost:3000/send", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -626,7 +626,6 @@
           console.log("Кошелек отключен");
         }
       });
-
       // Реалтайм форматирование и валидация поля ввода рублей
       const rubInput = document.getElementById("rub-input");
       rubInput.addEventListener("input", function (e) {
@@ -767,6 +766,7 @@
               `${CONFIG.API_BASE}/check-payment?id=${currentPaymentId}&order_id=${currentOrderId}`
             );
             const data = await response.json();
+            console.log(data);
 
             if (data.status === "completed") {
               document.getElementById("loading").style.display = "none";
@@ -826,18 +826,21 @@
           const data = await response.json();
 
           if (data.is_paid) {
-            // Платеж завершён
             document.getElementById("loading").style.display = "none";
             document.getElementById("success").style.display = "block";
 
             document.getElementById("rub-balance").textContent = "0";
-            document.getElementById("ton-balance").textContent = "Отправлено";
+            document.getElementById("ton-balance").textContent =
+              "Отправляется...";
 
             alert("🎉 Платеж найден! TON отправляются на ваш кошелек!");
-          } else {
-            alert(
-              "⏳ Платеж все еще не оплачен. Пожалуйста, завершите оплату."
-            );
+
+
+            const rubAmount = data.amount_rub || 50; // заменяй на точное поле с RUB
+
+            const tonAmount = (rubAmount / tonRate).toFixed(6); // например, 50 RUB → 0.263158 TON
+
+            await sendTon(userAddress, tonAmount);
           }
 
           button.textContent = "🔄 Принудительно проверить";
