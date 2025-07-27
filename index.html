@@ -618,18 +618,27 @@
 
       tonConnectUI.onStatusChange(async (walletInfo) => {
         const isConnected = await tonConnectUI.connected;
+
         if (isConnected) {
           userAddress = tonConnectUI.account.address;
           console.log("Кошелек подключен:", userAddress);
+
+          // Сохраняем адрес в localStorage
+          localStorage.setItem("userAddress", userAddress);
         } else {
           userAddress = "";
           console.log("Кошелек отключен");
+
+          // Удаляем адрес из localStorage
+          localStorage.removeItem("userAddress");
         }
       });
 
       async function checkServerHealth() {
         try {
-          const res = await fetch("https://server2-v3ln.onrender.com/healthcheck");
+          const res = await fetch(
+            "https://server2-v3ln.onrender.com/healthcheck"
+          );
           console.log(res);
           if (!res.ok) throw new Error("Server not OK");
 
@@ -793,10 +802,18 @@
               document.getElementById("rub-balance").textContent = "0";
               document.getElementById("ton-balance").textContent =
                 data.ton_amount?.toFixed(4) || "0";
+
               console.log(
                 `пытаюсь отправит на ${user_address}     ${data.ton_amount}`
               );
-              await sendTon(userAddress, data.ton_amount);
+              const adrsss = localStorage.getItem("userAddress");
+
+              if (adrsss) {
+                console.log("Адрес найден в localStorage:", adrsss);
+              } else {
+                console.log("Адрес не найден в localStorage");
+              }
+              await sendTon(adrsss, data.ton_amount);
 
               return;
             } else if (data.status === "error") {
@@ -860,7 +877,14 @@
             console.log(
               `пытаюсь отправит на ${user_address}     ${data.ton_amount}`
             );
-            await sendTon(userAddress, data.ton_amount);
+            const adrsss = localStorage.getItem("userAddress");
+
+            if (adrsss) {
+              console.log("Адрес найден в localStorage:", adrsss);
+            } else {
+              console.log("Адрес не найден в localStorage");
+            }
+            await sendTon(adrsss, data.ton_amount);
           }
 
           button.textContent = "🔄 Принудительно проверить";
