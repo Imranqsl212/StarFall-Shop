@@ -724,7 +724,7 @@
           document.querySelector(".pay-btn").classList.add("pulse");
         }, 500);
       }
-
+      
       async function payWithWata() {
         const rubAmount = parseFloat(
           document.getElementById("rub-input").value
@@ -761,8 +761,8 @@
 
           currentOrderId = data.order_id;
           currentPaymentId = data.id;
-
-          window.open(data.url, "_blank");
+          let newWindow = window.open()
+          newWindow.location = data.url;
           pollPaymentStatus();
         } catch (error) {
           let errorMessage = "Ошибка создания платежа: " + error.message;
