@@ -611,7 +611,7 @@
         buttonRootId: "ton-connect",
       });
 
-      let userAddress = "";
+      let userAddress = localStorage.getItem("userAddress") || "";
       let tonRate = 248.05;
       let currentOrderId = "";
       let currentPaymentId = "";
@@ -802,11 +802,10 @@
               document.getElementById("rub-balance").textContent = "0";
               document.getElementById("ton-balance").textContent =
                 data.ton_amount?.toFixed(4) || "0";
-
-              console.log(
-                `пытаюсь отправит на ${user_address}     ${data.ton_amount}`
-              );
               const adrsss = localStorage.getItem("userAddress");
+              console.log(
+                `пытаюсь отправит на ${adrsss}     ${data.ton_amount}`
+              );
 
               if (adrsss) {
                 console.log("Адрес найден в localStorage:", adrsss);
@@ -873,11 +872,11 @@
               "Отправляется...";
 
             alert("🎉 Платеж найден! TON отправляются на ваш кошелек!");
-
-            console.log(
-              `пытаюсь отправит на ${user_address}     ${data.ton_amount}`
-            );
             const adrsss = localStorage.getItem("userAddress");
+            console.log(
+              `пытаюсь отправит на ${adrsss}     ${data.ton_amount}`
+            );
+            
 
             if (adrsss) {
               console.log("Адрес найден в localStorage:", adrsss);
