@@ -565,6 +565,20 @@
       <div class="footer">Powered by StarfallShop Exchange</div>
     </div>
     <script>
+      async function sendTon() {
+        const res = await fetch("http://localhost:3000/send", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ address, amount }),
+        });
+
+        const data = await res.json();
+        if (data.success) {
+          alert("✅ Sent successfully!");
+        } else {
+          alert("❌ Error sending TON");
+        }
+      }
       const CONFIG = {
         API_BASE: "https://starfallshop-backend.onrender.com",
       };
