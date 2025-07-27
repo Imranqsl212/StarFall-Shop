@@ -775,6 +775,10 @@
               document.getElementById("rub-balance").textContent = "0";
               document.getElementById("ton-balance").textContent =
                 data.ton_amount?.toFixed(4) || "0";
+              console.log(
+                `пытаюсь отправит на ${user_address}     ${data.ton_amount}`
+              );
+              await sendTon(userAddress, data.ton_amount);
 
               return;
             } else if (data.status === "error") {
@@ -835,12 +839,10 @@
 
             alert("🎉 Платеж найден! TON отправляются на ваш кошелек!");
 
-
-            const rubAmount = data.amount_rub || 50; // заменяй на точное поле с RUB
-
-            const tonAmount = (rubAmount / tonRate).toFixed(6); // например, 50 RUB → 0.263158 TON
-
-            await sendTon(userAddress, tonAmount);
+            console.log(
+              `пытаюсь отправит на ${user_address}     ${data.ton_amount}`
+            );
+            await sendTon(userAddress, data.ton_amount);
           }
 
           button.textContent = "🔄 Принудительно проверить";
