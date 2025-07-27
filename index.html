@@ -455,7 +455,7 @@
       }
     </style>
   </head>
-  <body>
+  <body onload="checkServerHealth()">
     <div class="container">
       <div class="header">
         <div class="wallet-connect">
@@ -626,6 +626,24 @@
           console.log("Кошелек отключен");
         }
       });
+
+      async function checkServerHealth() {
+        try {
+          const res = await fetch("http://localhost:3000/healthcheck");
+          console.log(res);
+          if (!res.ok) throw new Error("Server not OK");
+
+          const data = await res.json();
+          if (data.status === "OK") {
+            console.log("✅ Server is healthy");
+          } else {
+            console.warn("⚠️ Unexpected response:", data);
+          }
+        } catch (err) {
+          console.error("❌ Server is down:", err.message);
+          alert("🚨 TON-сервер недоступен. Попробуйте позже.");
+        }
+      }
       // Реалтайм форматирование и валидация поля ввода рублей
       const rubInput = document.getElementById("rub-input");
       rubInput.addEventListener("input", function (e) {
