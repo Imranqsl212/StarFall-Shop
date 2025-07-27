@@ -761,8 +761,7 @@
 
           currentOrderId = data.order_id;
           currentPaymentId = data.id;
-          let newWindow = window.open()
-          newWindow.location = data.url;
+          window.open(data.url, "_blank");
           pollPaymentStatus();
         } catch (error) {
           let errorMessage = "Ошибка создания платежа: " + error.message;
