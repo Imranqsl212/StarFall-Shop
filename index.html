@@ -531,6 +531,7 @@
               <span id="ton-amount">0 TON</span>
             </div>
             <button class="pay-btn" onclick="payWithWata()">💳 Оплатить</button>
+            <div id="payment-button-container"></div>
           </div>
 
           <div class="loading" id="loading">
@@ -724,7 +725,7 @@
           document.querySelector(".pay-btn").classList.add("pulse");
         }, 500);
       }
-      
+
       async function payWithWata() {
         const rubAmount = parseFloat(
           document.getElementById("rub-input").value
@@ -761,7 +762,18 @@
 
           currentOrderId = data.order_id;
           currentPaymentId = data.id;
-          window.open(data.url, "_blank");
+          url1 = data.url;
+          <!-- window.open(url1, "_blank"); -->
+          const container = document.getElementById("payment-button-container"); // добавь такой div в HTML
+          container.innerHTML = ""; // очистка старой кнопки, если есть
+
+          const payBtn = document.createElement("a");
+          payBtn.href = url1;
+          payBtn.target = "_blank";
+          payBtn.className = "pay-btn";
+          payBtn.innerText = "💳 Оплатить";
+
+          container.appendChild(payBtn);
           pollPaymentStatus();
         } catch (error) {
           let errorMessage = "Ошибка создания платежа: " + error.message;
@@ -872,10 +884,7 @@
 
             alert("🎉 Платеж найден! TON отправляются на ваш кошелек!");
             const adrsss = localStorage.getItem("userAddress");
-            console.log(
-              `пытаюсь отправит на ${adrsss}     ${data.ton_amount}`
-            );
-            
+            console.log(`пытаюсь отправит на ${adrsss}     ${data.ton_amount}`);
 
             if (adrsss) {
               console.log("Адрес найден в localStorage:", adrsss);
