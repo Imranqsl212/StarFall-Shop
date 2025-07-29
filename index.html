@@ -290,6 +290,15 @@
         border-radius: 15px;
         border: 1px solid rgba(76, 175, 80, 0.3);
       }
+      #payment-button-container {
+        margin-top: 10px;
+        width: 100%;
+        display: flex;
+        text-align: center;
+      }
+      #payment-button-container a {
+        text-decoration: none;
+      }
 
       .detail-row {
         display: flex;
@@ -531,8 +540,8 @@
               <span id="ton-amount">0 TON</span>
             </div>
             <button class="pay-btn" onclick="payWithWata()">💳 Оплатить</button>
-            <div id="payment-button-container"></div>
           </div>
+          <div id="payment-button-container"></div>
 
           <div class="loading" id="loading">
             <div class="spinner"></div>
@@ -763,6 +772,7 @@
           currentOrderId = data.order_id;
           currentPaymentId = data.id;
           url1 = data.url;
+          console.log(url1);
           <!-- window.open(url1, "_blank"); -->
           const container = document.getElementById("payment-button-container"); // добавь такой div в HTML
           container.innerHTML = ""; // очистка старой кнопки, если есть
